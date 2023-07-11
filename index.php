@@ -22,9 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Link Pribadi adalah sebuah layanan yang memungkinkan Anda untuk mempersingkat tautan yang panjang menjadi lebih singkat.">
-    <link rel="icon" href="https://cdn.linkpribadi.my.id/assets/images/logo/favicon-icon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="https://cdn.linkpribadi.my.id/assets/images/logo/favicon-icon.png"
-        type="image/x-icon">
+    <link rel="icon" href="https://linkpirbadi.b-cdn.net/assets/img/bingung.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://linkpirbadi.b-cdn.net/assets/img/bingung.png" type="image/x-icon">
     <title>SHORTLINK</title>
     <!-- Google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,12 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <div class="container">
         <div class="login-card">
             <div class="img-sagiri">
-                <img class="img-lo" src="assets/img/sagirigun.png" alt="sagiri">
+                <img class="img-lo" src="https://linkpirbadi.b-cdn.net/assets/img/sagirigun.png" alt="sagiri">
             </div>
             <div class="col-12">
                 <form method="POST" class="login-form">
-                    <h4>Login</h4>
-                    <h6>Welcome back! Log in to your account.</h6>
+                    <br />
+                    <br />
                     <div class="form-group mb-3">
                         <div class="input-group"><span class="input-group-text"><i class="icon-user"></i></span>
                             <input class="form-control" name="username" autocomplete="off" type="text" required=""
@@ -76,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                 placeholder="*********">
                         </div>
                     </div>
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-2 text-center">
                         <button class="btn btn-secondary btn-block" type="submit"><i class="icon-key"></i>
                             Signin</button>
                     </div>

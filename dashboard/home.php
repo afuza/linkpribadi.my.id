@@ -14,7 +14,8 @@ include('template/header.php');
                 <div class="col-sm-6 mb-2">
                     <div class="card-visit">
                         <div class="img-sagiri-home">
-                            <img class="img-los" src="../assets/img/bingung.png" alt="sagiri">
+                            <img class="img-los" src="https://linkpirbadi.b-cdn.net/assets/img/bingung.png"
+                                alt="sagiri">
                         </div>
                         <div class="blam">
                             <div class="text-center">
@@ -32,7 +33,8 @@ include('template/header.php');
                 <div class="col-sm-6 mb-2">
                     <div class="card-visit">
                         <div class="img-sagiri-side">
-                            <img class="img-losa" src="../assets/img/bikini.png" alt="sagiri">
+                            <img class="img-losa" src="https://linkpirbadi.b-cdn.net/assets/img/bikini.png"
+                                alt="sagiri">
                         </div>
                         <div class="blam">
                             <div class="text-center">
@@ -58,7 +60,8 @@ include('template/header.php');
                 <div class="col-sm-12 mb-2">
                     <div class="card-settings">
                         <div class="img-sagiri-side">
-                            <img class="img-losa" src="../assets/img/sekolah.png" alt="sagiri">
+                            <img class="img-losa" src="https://linkpirbadi.b-cdn.net/assets/img/sekolah.png"
+                                alt="sagiri">
                         </div>
                         <form>
                             <div class="mb-2">
@@ -76,15 +79,19 @@ include('template/header.php');
                                     $update = '';
                                 }
                                 ?>
-                                <input id="mode" type="checkbox" <?= $status ?> data-toggle="toggle" data-onstyle="light">
+                                <input id="mode" type="checkbox" <?= $status ?> data-toggle="toggle"
+                                    data-onstyle="light">
                             </div>
                             <h5 style="text-transform: uppercase;">Link SEttings</h5>
                             <div class="mb-2 row">
                                 <div class="col-lg-12">
                                     <div class="input-group">
-                                        <input name="link" class="form-control btn-square" placeholder="link scam" type="text">
+                                        <input name="link" class="form-control btn-square" placeholder="link scam"
+                                            type="text">
 
-                                        <button <?= $update ?> type="button" id="linkscam" class="input-group-text btn btn-secondary btn-right"><i class="icon-plus"></i> Update
+                                        <button <?= $update ?> type="button" id="linkscam"
+                                            class="input-group-text btn btn-secondary btn-right"><i
+                                                class="icon-plus"></i> Update
                                         </button>
                                     </div>
                                 </div>
@@ -103,7 +110,9 @@ include('template/header.php');
 
                                         </select>
 
-                                        <button <?= $update ?> type="button" id="countrylock" class="input-group-text btn btn-secondary btn-right"><i class="icon-plus"></i> Update
+                                        <button <?= $update ?> type="button" id="countrylock"
+                                            class="input-group-text btn btn-secondary btn-right"><i
+                                                class="icon-plus"></i> Update
                                         </button>
                                     </div>
                                 </div>
@@ -115,7 +124,7 @@ include('template/header.php');
                 <div class="col-sm-12">
                     <div class="card-status">
                         <div class="img-sagiri-side">
-                            <img class="img-losa" src="../assets/img/hot.png" alt="sagiri">
+                            <img class="img-losa" src="https://linkpirbadi.b-cdn.net/assets/img/hot.png" alt="sagiri">
                         </div>
                         <div class="status-blam">
                             <h5 style="text-transform: uppercase;">Status</h5>
@@ -158,17 +167,19 @@ include('template/header.php');
                                         $panel = explode('/', $linksc)[2];
                                         $panel = "https://$panel/beonPnl";
                                     ?>
-                                        <tr>
-                                            <td><?= $linksc  ?></td>
-                                            <td>
-                                                <button id="<?= $idlinksc ?>" class="btn btn-danger btn-sm trash"><i class="icon-trash"></i>
-                                                    Delete</button> |
+                                    <tr>
+                                        <td><?= $linksc  ?></td>
+                                        <td>
+                                            <button id="<?= $idlinksc ?>" class="btn btn-danger btn-sm trash"><i
+                                                    class="icon-trash"></i>
+                                                Delete</button> |
 
-                                                <a href="<?= $panel ?>" target="_blank" class="btn btn-warning btn-sm"><i class="icon-user"></i>
-                                                    Panel</a>
+                                            <a href="<?= $panel ?>" target="_blank" class="btn btn-warning btn-sm"><i
+                                                    class="icon-user"></i>
+                                                Panel</a>
 
-                                            </td>
-                                        </tr>
+                                        </td>
+                                    </tr>
                                     <?php
                                     }
                                     ?>
