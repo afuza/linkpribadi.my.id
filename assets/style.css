@@ -12,6 +12,7 @@ body{
 }
 
 .login-card{
+    position: relative;
     font-family: 'Rubik', sans-serif;
     width: 350px;
     background-color: #d8d5d5;
@@ -20,18 +21,22 @@ body{
     border-radius: 2px;
     box-shadow: 1px 3px 2px rgba(0, 0, 0, 0.3);
     overflow: hidden;
-    z-index: -100;
+    z-index: 1;
 }
 
 .login-form{
+    position: relative;
     width: 100%;
     margin-bottom: 15px;
+    z-index: 1;
 }
 
 .img-sagiri{
     position: absolute;
-    top: 120px; left: 22%;
-    z-index: -100;
+    /* top: 10; left: 22%; */
+    margin-top: -70px;
+    margin-left: 40px;
+    z-index: -1;
 }
 .img-lo{
     width: 200px;
@@ -39,21 +44,20 @@ body{
 
 .img-sagiri-home{
     position: absolute;
-    top: 298px; left: -120px;
-    z-index: -100;
+    z-index: -1;
 }
 
 .img-los{
-    width: 400px;
+    width: 90px;
 }
 .img-losa{
-    width: 375px;
+    width: 205px;
 }
 
 .img-sagiri-side{
     position: absolute;
-    top: 104px; right: -120px;
-    z-index: -100;
+    right: 0;
+    z-index: -1;
 }
 
 .link-svg{
@@ -86,27 +90,46 @@ body{
 }
 
 .card-visit{
+    position: relative;
     font-family: 'Bagel Fat One', cursive;
     padding: 20px 20px 20px 20px;
     border-radius: 5px;
     background-color: #424242;
     color: #ffffff;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.blam{
+    color: #fff;
+    text-shadow: 2px 2px 3px #333;
+    position: relative;
+    z-index: 1;
 }
 
 .card-settings{
+    position: relative;
     font-family: 'Rubik', sans-serif;
     padding: 20px 20px 20px 20px;
     border-radius: 5px;
     background-color: #8a2121;
     color: #ffffff;
+    overflow: hidden;
+    z-index: 1;
 }
-
+.status-blam{
+    position: relative;
+    z-index: 1;
+}
 .card-status{
+    position: relative;
     font-family: 'Rubik', sans-serif;
     padding: 20px 20px 20px 20px;
     border-radius: 5px;
     background-color: #424242;
     color: #ffffff;
+    overflow: hidden;
+    z-index: 1;
 }
 
 table {
@@ -140,4 +163,11 @@ table {
     border-radius: 5px;
     background-color: #8a2121;
     color: #ffffff;
+}
+
+form{
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+    z-index: 1;
 }

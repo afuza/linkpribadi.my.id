@@ -1,6 +1,5 @@
 <?php
 
-
 $server = $_ENV['HOST_DB'];
 $username = $_ENV['USER_DB'];
 $password = $_ENV['PASSWORD_DB'];

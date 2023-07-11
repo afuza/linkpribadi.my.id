@@ -1,9 +1,3 @@
-<div class="img-sagiri-home">
-    <img class="img-los" src="../assets/img/openmap.png" alt="sagiri">
-</div>
-<div class="img-sagiri-side">
-    <img class="img-losa" src="../assets/img/bikinidepan.png" alt="sagiri">
-</div>
 <!-- footer start-->
 <footer class="footer mt-2">
     <div class="container-fluid">
@@ -25,7 +19,7 @@ if (@$_GET['msg'] == "success_login") {
 Swal.fire({
     icon: 'success',
     title: 'Berhasil',
-    text: 'Anda berhasil logout!'
+    text: 'Anda berhasil Login!'
   })
 </script>";
 }
