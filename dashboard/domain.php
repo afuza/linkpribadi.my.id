@@ -1,5 +1,10 @@
 <?php
+
 include('template/header.php');
+header("Cache-Control: no-store, no-cache, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 ?>
 
 <!-- Container-fluid starts-->
