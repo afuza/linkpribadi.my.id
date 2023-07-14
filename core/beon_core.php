@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 
 require_once('../vendor/autoload.php');
 
@@ -137,5 +138,22 @@ function updatecookie()
 {
     if (isset($_COOKIE['site-login'])) {
         setcookie("site-login", "<" .  $_COOKIE['site-login'] . ">", time() + (86400 * 30), "/");
+    }
+}
+
+function ping($host, $port, $timeout)
+{
+    $tB = microtime(true);
+    $fP = fSockOpen($host, $port, $errno, $errstr, $timeout);
+    if (!$fP) {
+        return "down";
+    }
+    $tA = microtime(true);
+    $ping = round((($tA - $tB) * 1000), 0) . " ms";
+
+    if ($ping == "down") {
+        return "down";
+    } else {
+        return $ping;
     }
 }

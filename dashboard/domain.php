@@ -22,6 +22,7 @@ include('template/header.php');
                     <thead>
                         <tr>
                             <th>Domain</th>
+                            <th>Ping Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -31,9 +32,16 @@ include('template/header.php');
                         foreach ($domains as $row) {
                             $domain = $row['domain'];
                             $idDomain =  $row['iddomain_short'];
+                            $ping = ping($domain, 80, 10);
+                            if ($ping == 'down') {
+                                $status = '<span class="badge bg-danger"><i class="icon-bar-chart"></i> DOWN</span>';
+                            } else {
+                                $status = '<span class="badge bg-success"><i class="icon-bar-chart"></i> ' . $ping . '</span>';
+                            }
                         ?>
                             <tr>
                                 <td><a style="text-decoration:none; color:black;" target="_blank" href="https://<?= $domain ?>"><?= $domain ?></a></td>
+                                <td><?= $status ?></td>
                                 <td>
                                     <button id="<?= $idDomain ?>" class="btn btn-danger btn-sm genit"><i class="icon-trash"></i>
                                         Delete</button>
