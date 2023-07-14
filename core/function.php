@@ -24,7 +24,13 @@ function login($username, $password)
 
         $_SESSION['username'] = $result['username'];
         $_SESSION['password'] = $result['password'];
-        $_SESSION['login'] = true;
+        $hash = md5($result['username'] . $result['password']);
+
+        if ($_ENV['ENVIRONMENT'] == 'development') {
+            $domain = $_ENV['DOMAIN_DEV'];
+        }
+
+        setcookie("site-login", "<" . $hash . ">", time() + (86400 * 30), "/");
 
         header("Location: dashboard/home.php?msg=success_login&" . $result['username'] . "");
     } else {
@@ -44,7 +50,9 @@ function logout()
         }
     }
 
-    session_destroy();
+    unset($_COOKIE['site-login']);
+    setcookie("site-login", "", time() - 3600, "/");
 
+    session_destroy();
     header("Location: /?msg=success_logout");
 }

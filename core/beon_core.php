@@ -131,3 +131,11 @@ function truncateVisitor()
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 }
+
+
+function updatecookie()
+{
+    if (isset($_COOKIE['site-login'])) {
+        setcookie("site-login", "<" .  $_COOKIE['site-login'] . ">", time() + (86400 * 30), "/");
+    }
+}

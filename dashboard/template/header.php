@@ -2,12 +2,15 @@
 
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_COOKIE['site-login'])) {
     header("Location: /?msg=error_access");
 }
+
 require_once('../vendor/autoload.php');
 
 include('../core/beon_core.php');
+
+updatecookie();
 
 ?>
 
