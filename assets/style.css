@@ -154,12 +154,12 @@ table {
     color: #ffffff;
     background-color: #424242;
     border-radius: 5px;
-    padding: 20px 20px 20px 20px;
+    padding: 10px 10px 10px 10px;
 }
 
 .card-clear{
     font-family: 'Rubik', sans-serif;
-    padding: 20px 20px 20px 20px;
+    padding: 10px 10px 10px 10px;
     border-radius: 5px;
     background-color: #8a2121;
     color: #ffffff;

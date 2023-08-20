@@ -1,16 +1,16 @@
 <?php
+// error_reporting(E_ALL & ~E_NOTICE);
+// ini_set('display_errors', 1);
 
 session_start();
 
-if (!isset($_COOKIE['site-login'])) {
-    header("Location: /?msg=error_access");
-}
-
-require_once('../vendor/autoload.php');
-
 include('../core/beon_core.php');
 
-updatecookie();
+if (!verify_session()) {
+    header("Location: /?msg=error_access");
+    exit();
+}
+
 
 ?>
 
@@ -24,7 +24,7 @@ updatecookie();
     <meta name="description" content="Link Pribadi adalah sebuah layanan yang memungkinkan Anda untuk mempersingkat tautan yang panjang menjadi lebih singkat.">
     <link rel="icon" href="https://linkpirbadi.b-cdn.net/assets/img/bingung.png" type="image/x-icon">
     <link rel="shortcut icon" href="https://linkpirbadi.b-cdn.net/assets/img/bingung.png" type="image/x-icon">
-    <title>Dashboard Link Pribadi</title>
+    <title><?= get_user(); ?></title>
     <!-- Google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">

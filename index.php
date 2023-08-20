@@ -1,16 +1,17 @@
 <?php
 session_start();
 
-if (isset($_COOKIE['site-login'])) {
-    header("Location: /dashboard/home.php");
-}
-
 require_once('core/function.php');
 
+if (verify_session()) {
+    header("Location: /dashboard/home.php");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    login($_POST["username"], $_POST["password"]);
+    secure_login($_POST["username"], $_POST["password"]);
 }
+
 ?>
 
 <!DOCTYPE html>

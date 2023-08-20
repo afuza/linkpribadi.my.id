@@ -1,4 +1,6 @@
 <?php
+$get_country = json_decode(file_get_contents("../core/country.json"), true);
+$get_codeCountry = json_decode(file_get_contents("../core/code_country.json"), true);
 include('template/header.php');
 ?>
 
@@ -64,17 +66,21 @@ include('template/header.php');
                     <img class="img-losa" src="https://linkpirbadi.b-cdn.net/assets/img/sekolah.png" alt="sagiri">
                 </div>
                 <div class="status-blam">
-                    <h5 class="card-title mb-4">Visitor JP <span class="badge bg-primary">
-                            <?php $visitor = getVisitor();
-                            $count = 0;
-                            foreach ($visitor as $key => $value) {
-                                if ($value['code_country'] == 'JP') {
-                                    $count++;
-                                }
-                            }
-                            echo $count; ?>
-                        </span>
-                    </h5>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h5 class="card-title mb-4">Visitor JP <span class="badge bg-primary">
+                                    <?php $visitor = getVisitor();
+                                    $count = 0;
+                                    foreach ($visitor as $key => $value) {
+                                        if ($value['code_country'] == 'JP') {
+                                            $count++;
+                                        }
+                                    }
+                                    echo $count; ?>
+                                </span>
+                            </h5>
+                        </div>
+                    </div>
                     <hr>
                     <table id="country" class="table  table-hover table-fixed-header" style="width: 100%; font-size:12px;">
                         <thead>
@@ -90,7 +96,7 @@ include('template/header.php');
                         <tbody>
                             <?php
                             $code_country = getCountryLock()[0]['country'];
-                            $visit_country = getVisitorBYcode($code_country);
+                            $visit_country = getRealVisitorByCode($code_country);
 
                             foreach ($visit_country as $value) {
                                 $ip = $value['ips'];
@@ -101,6 +107,7 @@ include('template/header.php');
                                 $scama = explode('/', $scama)[2];
                                 $email = $value['email'];
                                 $date = $value['date'];
+                                $blocked = $value['blocked'];
                             ?>
                                 <tr>
                                     <td><?= $ip ?></td>

