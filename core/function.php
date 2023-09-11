@@ -24,63 +24,74 @@ function get_device()
     return $dd->getDeviceName();
 }
 
-
 function secure_login($username, $password)
 {
     global $conn;
 
-    $sql = "SELECT 	iduser, username, password FROM user WHERE username = :username";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($user && password_verify($password, $user['password'])) {
-        // Generate a unique session token
-        $sessionToken = bin2hex(random_bytes(32));
-
-        //Session Id
-        session_start();
-        $_SESSION['user_id'] = $user['iduser'];
-
-
-        if ($_ENV['ENVIRONMENT'] === 'development') {
-            $domain = $_ENV['DOMAIN_DEV'];
-            $domain = explode(":", $domain)[0];
-        } else {
-            $domain = $_ENV['DOMAIN_PROD'];
-        }
-
-        // Store session in database
-        $sql = "INSERT INTO user_sessions (user_id, session_token, 	device_name , created_at, last_activity)
-                VALUES (:user_id, :session_token, :device_name ,NOW(), NOW())";
+    $sql = "SELECT iduser, username, password FROM user WHERE username = :username";
+    try {
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':user_id', $user['iduser']);
-        $stmt->bindParam(':session_token', $sessionToken);
-        $stmt->bindParam(':device_name', get_device());
+        $stmt->bindParam(':username', $username);
         $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Set the session token as a secure, http-only cookie
+        if ($user && password_verify($password, $user['password'])) {
+            // Generate a unique session token
+            $sessionToken = bin2hex(random_bytes(32));
 
-        if ($_ENV['ENVIRONMENT'] === 'development') {
-            setcookie("session_token", $sessionToken, time() + (86400 * 30), "/", $domain, false, true);
+            // Start session (if not already started)
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            $_SESSION['user_id'] = $user['iduser'];
+
+            if ($_ENV['ENVIRONMENT'] === 'development') {
+                $domain = $_ENV['DOMAIN_DEV'];
+                $domain = explode(":", $domain)[0];
+            } else {
+                $domain = $_ENV['DOMAIN_PROD'];
+            }
+
+            // Store session in database
+            $sql = "INSERT INTO user_sessions (user_id, session_token, device_name, created_at, last_activity)
+                    VALUES (:user_id, :session_token, :device_name, NOW(), NOW())";
+            try {
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':user_id', $user['iduser']);
+                $stmt->bindParam(':session_token', $sessionToken);
+                $stmt->bindParam(':device_name', get_device());
+                $stmt->execute();
+
+                // Set the session token as a secure, http-only cookie
+                if ($_ENV['ENVIRONMENT'] === 'development') {
+                    setcookie("session_token", $sessionToken, time() + (86400 * 30), "/", $domain, false, true);
+                } else {
+                    setcookie("session_token", $sessionToken, [
+                        'expires' => time() + (86400 * 30),
+                        'path' => '/',
+                        'domain' => $domain,
+                        'secure' => true,
+                        'httponly' => true,
+                        'samesite' => 'Strict', // Nilai SameSite: 'Strict', 'Lax', atau 'None'
+                    ]);
+                }
+
+                // Redirect to dashboard or wherever needed
+                header("Location: dashboard/home.php?msg=success_login");
+            } catch (PDOException $e) {
+                // Handle database error
+                header("Location: /?msg=database_error");
+            }
         } else {
-            setcookie("session_token", $sessionToken, [
-                'expires' => time() + (86400 * 30),
-                'path' => '/',
-                'domain' => $domain,
-                'secure' => true,
-                'httponly' => true,
-                'samesite' => 'Strict', // Nilai SameSite: 'Strict', 'Lax', atau 'None'
-            ]);
+            header("Location: /?msg=" . urlencode($user['password']));
         }
-
-        // Redirect to dashboard or wherever needed
-        header("Location: dashboard/home.php?msg=success_login");
-    } else {
-        header("Location: /?msg=error_login");
+    } catch (PDOException $e) {
+        // Handle database error
+        header("Location: /?msg=database_error");
     }
 }
+
 
 
 function change_password($user_id, $new_password)
