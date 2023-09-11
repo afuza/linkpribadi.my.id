@@ -84,7 +84,7 @@ function secure_login($username, $password)
                 header("Location: /?msg=database_error");
             }
         } else {
-            header("Location: /?msg=" . urlencode($user['password']));
+            header("Location: /?msg=invalid_credentials");
         }
     } catch (PDOException $e) {
         // Handle database error
