@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 0);
-ini_set("memory_limit", -1);
-error_reporting(0);
 
 header("Cache-Control: no-store, no-cache, max-age=0");
 // header("Cache-Control: post-check=0, pre-check=0", false);
@@ -9,6 +6,18 @@ header("Pragma: no-cache");
 
 require_once('../core/beon_core.php');
 require_once('../core/short_core.php');
+
+if ($_ENV['ENVIRONMENT'] === 'development') {
+    ini_set('display_errors', 1);
+    ini_set("memory_limit", -1);
+    error_reporting(1);
+} else {
+    ini_set('display_errors', 0);
+    ini_set("memory_limit", -1);
+    error_reporting(0);
+}
+
+
 
 
 @$email = base64_decode($_GET['key']);
