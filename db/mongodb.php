@@ -6,7 +6,7 @@ use MongoDB\Client;
 use MongoDB\Driver\ServerApi;
 
 try {
-    $uri = "mongodb+srv://natama:Afuza123@linkpribadi.5za8toe.mongodb.net/?retryWrites=true&w=majority";
+    $uri = "mongodb://localhost:27017";
     
     // Specify Stable API version 1
     $apiVersion = new ServerApi(ServerApi::V1);
