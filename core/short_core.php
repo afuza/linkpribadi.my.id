@@ -169,7 +169,7 @@ function updateActivity($id)
 function generateRandomGmail()
 {
     $username = generateRandomString(10); // Ganti 10 dengan panjang username yang diinginkan
-    $domain = 'gmail.com';
+    $domain = 'fake.com';
     $email = $username . '@' . $domain;
     return $email;
 }

