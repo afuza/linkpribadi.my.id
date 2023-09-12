@@ -94,7 +94,7 @@ function deviceBot()
 function ipbot()
 {
     $proxycheck_options = array(
-        'API_KEY' => '41l248-757m2a-b98979-kr5763', // Your API Key.
+        'API_KEY' => $_ENV['KEY_PROXY'], // Your API Key.
         'ASN_DATA' => 0, // Enable ASN data response.
         'DAY_RESTRICTOR' => 7, // Restrict checking to proxies seen in the past # of days.
         'VPN_DETECTION' => 1, // Check for both VPN's and Proxies instead of just Proxies.

@@ -18,8 +18,6 @@ if ($_ENV['ENVIRONMENT'] === 'development') {
 }
 
 
-
-
 @$email = base64_decode($_GET['key']);
 
 $origin = $_SERVER['HTTP_HOST'];
