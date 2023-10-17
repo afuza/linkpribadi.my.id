@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         text: 'Anda berhasil logout!'
       })
     </script>";
-    } else if (@$_GET['msg'] == "error_access") {
+    } else if (@$_GET['msg'] == "error_access" || @$_GET['msg'] == "invalid_credentials") {
         echo "<script>
     Swal.fire({
         icon: 'error',
