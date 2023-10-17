@@ -3,7 +3,6 @@
         "matomo/device-detector": "^6.1",
         "geoip2/geoip2": "^2.13",
         "proxycheck/proxycheck-php": "^0.2.2",
-        "vlucas/phpdotenv": "^5.5",
-        "mongodb/mongodb": "^1.16"
+        "vlucas/phpdotenv": "^5.5"
     }
 }
