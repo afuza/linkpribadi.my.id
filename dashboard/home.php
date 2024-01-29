@@ -14,7 +14,7 @@ include('template/header.php');
                 <div class="col-sm-6 mb-2">
                     <div class="card-visit">
                         <div class="img-sagiri-home">
-                            <img class="img-los" src="https://linkpirbadi.b-cdn.net/assets/img/bingung.png" alt="sagiri">
+                            <img class="img-los" src="https://zetas.b-cdn.net/linkpribadi/assets/img/bingung.png" alt="sagiri">
                         </div>
                         <div class="blam">
                             <div class="text-center">
@@ -32,7 +32,7 @@ include('template/header.php');
                 <div class="col-sm-6 mb-2">
                     <div class="card-visit">
                         <div class="img-sagiri-side">
-                            <img class="img-losa" src="https://linkpirbadi.b-cdn.net/assets/img/bikini.png" alt="sagiri">
+                            <img class="img-losa" src="https://zetas.b-cdn.net/linkpribadi/assets/img/bikini.png" alt="sagiri">
                         </div>
                         <div class="blam">
                             <div class="text-center">
@@ -58,7 +58,7 @@ include('template/header.php');
                 <div class="col-sm-12 mb-2">
                     <div class="card-settings">
                         <div class="img-sagiri-side">
-                            <img class="img-losa" src="https://linkpirbadi.b-cdn.net/assets/img/sekolah.png" alt="sagiri">
+                            <img class="img-losa" src="https://zetas.b-cdn.net/linkpribadi/assets/img/sekolah.png" alt="sagiri">
                         </div>
                         <form>
                             <div class="mb-2">
@@ -115,7 +115,7 @@ include('template/header.php');
                 <div class="col-sm-12">
                     <div class="card-status">
                         <div class="img-sagiri-side">
-                            <img class="img-losa" src="https://linkpirbadi.b-cdn.net/assets/img/hot.png" alt="sagiri">
+                            <img class="img-losa" src="https://zetas.b-cdn.net/linkpribadi/assets/img/hot.png" alt="sagiri">
                         </div>
                         <div class="status-blam">
                             <h5 style="text-transform: uppercase;">Status</h5>

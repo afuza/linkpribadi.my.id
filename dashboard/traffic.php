@@ -17,7 +17,7 @@ include('template/header.php');
         <div class="col-sm-12 mb-4">
             <div class="card-status">
                 <div class="img-sagiri-side">
-                    <img class="img-losa" src="https://linkpirbadi.b-cdn.net/assets/img/hot.png" alt="sagiri">
+                    <img class="img-losa" src="https://zetas.b-cdn.net/linkpribadi/assets/img/hot.png" alt="sagiri">
                 </div>
                 <div class="status-blam">
                     <h5 class="card-title mb-4">Visitor <span class="badge bg-secondary"><?= $visitors = count(getVisitor()); ?></span>
@@ -63,7 +63,7 @@ include('template/header.php');
         <div class="col-sm-12">
             <div class="card-settings">
                 <div class="img-sagiri-side">
-                    <img class="img-losa" src="https://linkpirbadi.b-cdn.net/assets/img/sekolah.png" alt="sagiri">
+                    <img class="img-losa" src="https://zetas.b-cdn.net/linkpribadi/assets/img/sekolah.png" alt="sagiri">
                 </div>
                 <div class="status-blam">
                     <div class="row">
